@@ -1,23 +1,23 @@
-import logo from './logo.svg';
+import Header from './components/Header';
+import MainContent from './components/MainContent';
+import { useState } from 'react';
 import './App.css';
 
+
 function App() {
+
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [movies, setMovies] = useState([])
+
+  const handleForm = () => {
+    setShowAddForm(!showAddForm);
+    console.log(showAddForm);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header handleForm={handleForm} />
+      <MainContent showForm={showAddForm} />
     </div>
   );
 }

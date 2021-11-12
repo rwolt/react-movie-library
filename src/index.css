@@ -11,3 +11,108 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgb(170, 170, 170);
+  color: rgb(48, 48, 48);
+  padding: 5px;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+}
+
+.logo-title h1 {
+  margin-left: 14px;
+}
+
+.auth-box {
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  width: 40px;
+}
+
+.user-name {
+  margin-left: 10px;
+}
+
+.add-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 150px;
+  font-size: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid black;
+  background-color: rgb(79, 79, 79);
+  color: white;
+  margin-left: 20px;
+}
+
+.add-button:hover, .auth-box:hover {
+  cursor: pointer;
+}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  background-color: rgba(25, 25, 123, 0.666);
+  width: 30%;
+  padding: 50px;
+  border-radius: 10px;
+  margin-top: 30px;
+  position: relative;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  color: white;
+  padding: 10px;
+}
+
+.form-container input {
+  height: 30px;
+  font-size: 26px;
+  border-radius: 3px;
+  outline: none;
+  border: none;
+  padding: 3px;
+}
+
+.movie-form {
+  width: 100%;
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+.content-container {
+  display: flex;
+  justify-content: center;
+}
+
+.add-to-lib-button {
+  font-size: 24px;
+  width: 180px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.add-to-lib-button:hover {
+  cursor:pointer;
+}
