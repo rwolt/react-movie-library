@@ -5,8 +5,14 @@ import AuthBox from './AuthBox.js';
 const Header = (props) => {
     return(
         <div className="header">
-            <AddButton handleForm={props.handleForm} />
-            <AuthBox user={props.user} handleSignIn={props.handleSignIn} handleSignOut={props.handleSignOut} />
+            <AddButton 
+                handleForm={props.handleForm} 
+            />
+            <AuthBox 
+                user={props.user} 
+                handleSignIn={props.handleSignIn} 
+                handleSignOut={props.handleSignOut} 
+            />
         </div>
     )
 }
