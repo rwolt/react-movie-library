@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import {db} from './utils/firebase';
 import {getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged} from 'firebase/auth';
-import {addDoc, collection} from 'firebase/firestore';
+import {addDoc, collection, serverTimestamp, updateDoc} from 'firebase/firestore';
 
 
 function App() {
@@ -41,6 +41,9 @@ function App() {
     const docRef = await addDoc(collection(db, "movies"), {
       ...movie,
       uid: user.uid
+    });
+    const updateTimeStamp = await updateDoc(docRef, {
+      timestamp: serverTimestamp()
     });
     //Clear the form and hide it
     setMovie({
