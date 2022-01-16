@@ -10,7 +10,7 @@ const MainContent = (props) => {
                     handleSubmit={props.handleSubmit}
                     movie={props.movie} 
                 /> 
-            : <LibraryDisplay movies={movies} />}
+            : <LibraryDisplay movies={props.movies} />}
         </div>
     )
 }
