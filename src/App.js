@@ -2,57 +2,55 @@ import Header from './components/Header';
 import MainContent from './components/MainContent';
 import { useEffect, useState } from 'react';
 import './App.css';
-import {db} from './utils/firebase';
 import {getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged} from 'firebase/auth';
-import {addDoc, collection, serverTimestamp, updateDoc} from 'firebase/firestore';
+import { collection, getFirestore, addDoc, query, where, orderBy, getDocs, onSnapshot } from '@firebase/firestore';
+
 
 
 function App() {
 
   const [showAddForm, setShowAddForm] = useState(false);
-  const [user, setUser] = useState({name: '', photoURL: '', uid: null})
-  const [movie, setMovie] = useState({
-    title: '',
-    director: '',
-    genre: '',
-    runtime: ''
-  })
+  const [user, setUser] = useState({name: '', photoURL: ''})
+  const [movie, setMovie] = useState({});
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     initFirebaseAuth();
   }, []);
+
+  useEffect(() => {
+
+
+
+    onSnapshot(collection(getFirestore(), 'movies'), (snapshot) => {
+      setMovies((snapshot.docs.map(doc => doc.data())))
+    });
+  }, [])
 
   const handleForm = () => {
     setShowAddForm(!showAddForm);
     console.log(showAddForm);
   }
 
-  //On change, update state and pass values to controlled components
+  //Control values of movie form from App state
   const handleChange = (e) => {
     const {name} = e.target;
-    setMovie( {
-      ...movie, 
-      [name]: e.target.value
-    })
+    setMovie({...movie, [name]: e.target.value})
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const docRef = await addDoc(collection(db, "movies"), {
-      ...movie,
-      uid: user.uid
-    });
-    const updateTimeStamp = await updateDoc(docRef, {
-      timestamp: serverTimestamp()
-    });
-    //Clear the form and hide it
-    setMovie({
-      title: '',
-      director: '',
-      genre: '',
-      runtime: ''
-    });
+    const uid = getAuth().currentUser.uid;
+    setMovie({...movie, user: uid});
     handleForm();
+    try{
+      await addDoc(collection(getFirestore(), 'movies'), {
+        ...movie
+      });
+    }
+    catch(error) {
+      console.error('Error writing new message to Firebase Database', error);
+    }
   }
 
 
@@ -73,8 +71,6 @@ function App() {
       onAuthStateChanged(getAuth(), authStateObserver);
     }
 
-
-
   const getUserName = () => {
     return getAuth().currentUser.displayName;
   }
@@ -83,31 +79,28 @@ function App() {
     return getAuth().currentUser.photoURL || './images/user.png';
   }
 
-  const getUserID = () => {
-    return getAuth().currentUser.uid;
-  }
-
 const authStateObserver = (user) => {
     if (user) {
-      setUser({name: getUserName(),  photoURL: getProfilePicUrl(), uid: getUserID()});
+      setUser({name: getUserName(),  photoURL: getProfilePicUrl()});
     } else {
-      setUser({name: '', photoURL: '', uid: null});
+      setUser({name: '', photoURL: ''});
     }
   }
 
   return (
     <div className="App">
-      <Header 
-        handleSignIn={signIn} 
-        handleSignOut={signOutUser} 
-        user={user} 
-        handleForm={handleForm} 
+      <Header
+        handleSignIn={signIn}
+        handleSignOut={signOutUser}
+        user={user}
+        handleForm={handleForm}
       />
-      <MainContent 
-        showForm={showAddForm} 
-        handleChange={handleChange} 
+      <MainContent
+        showForm={showAddForm}
+        movie={movie}
+        movies={movies}
+        handleChange={handleChange}
         handleSubmit={handleSubmit}
-        movie={movie} 
       />
     </div>
   );

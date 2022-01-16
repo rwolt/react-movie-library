@@ -1,4 +1,5 @@
 import AddMovieForm from './AddMovieForm';
+import LibraryDisplay from './LibraryDisplay';
 const MainContent = (props) => {
 
     return(
@@ -9,7 +10,7 @@ const MainContent = (props) => {
                     handleSubmit={props.handleSubmit}
                     movie={props.movie} 
                 /> 
-            : ''}
+            : <LibraryDisplay movies={props.movies} />}
         </div>
     )
 }
