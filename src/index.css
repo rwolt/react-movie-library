@@ -66,12 +66,12 @@ code {
 .form-container {
   display: flex;
   justify-content: center;
-  background-color: rgba(25, 25, 123, 0.666);
+  background-color: rgb(84, 84, 177);
   width: 30%;
   padding: 50px;
   border-radius: 10px;
   margin-top: 30px;
-  position: relative;
+  position: absolute;
 }
 
 .form-container form {
@@ -103,6 +103,7 @@ code {
 .content-container {
   display: flex;
   justify-content: center;
+  position: relative;
 }
 
 .add-to-lib-button {
@@ -115,4 +116,24 @@ code {
 
 .add-to-lib-button:hover {
   cursor:pointer;
+}
+
+.movie-card-container {
+  display: flex;
+  max-width: 1000px;
+}
+
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  background: rgb(87, 87, 87);
+  color: white;
+  border-radius: 5px;
+  width: 240px;
+}
+
+.movie-card p {
+  height: 20px;
+  padding: 5px;
 }

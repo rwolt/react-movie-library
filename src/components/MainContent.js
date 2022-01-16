@@ -4,13 +4,14 @@ const MainContent = (props) => {
 
     return(
         <div className="content-container">
+            <LibraryDisplay movies={props.movies} />
             {props.showForm ?  
                 <AddMovieForm 
                     handleChange={props.handleChange} 
                     handleSubmit={props.handleSubmit}
                     movie={props.movie} 
                 /> 
-            : <LibraryDisplay movies={props.movies} />}
+            : ''}
         </div>
     )
 }
