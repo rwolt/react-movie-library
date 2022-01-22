@@ -4,7 +4,9 @@ const MainContent = (props) => {
 
     return(
         <div className="content-container">
-            <LibraryDisplay movies={props.movies} />
+            <LibraryDisplay movies={props.movies}
+                handleDelete={props.handleDelete}
+             />
             {props.showForm ?  
                 <AddMovieForm 
                     handleChange={props.handleChange} 

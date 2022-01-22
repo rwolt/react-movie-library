@@ -12,7 +12,9 @@ import {
 import {
   collection,
   getFirestore,
+  doc,
   addDoc,
+  deleteDoc,
   query,
   where,
   orderBy,
@@ -40,7 +42,12 @@ function App() {
       );
       //Set the current state of movies to the snapshot of the movies collection
       onSnapshot(q, (snapshot) => {
-        setMovies(snapshot.docs.map((doc) => doc.data()));
+        //Return an object with the doc data and doc id
+        setMovies(snapshot.docs.map((doc) => {
+          const data = doc.data();
+          const id = doc.id
+          return {...data, id: id};
+        }));
       });
     } else {
       //If not authenticated, the library is empty
@@ -70,6 +77,12 @@ function App() {
     }
     setMovie({});
   };
+  
+  const handleDelete = async (e) => {
+    const {id} = e.target;
+    const docRef = doc(getFirestore(), "movies", id);
+    await deleteDoc(docRef);
+  }
 
   //Signs the user in
   const signIn = async () => {
@@ -123,6 +136,7 @@ function App() {
         movies={movies}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        handleDelete = {handleDelete}
       />
     </div>
   );
